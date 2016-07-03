@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Networking/Scenes/PreLoadMenu.unity
+- path: Assets/Networking/Scenes/GameMenu.unity
   isLoaded: 1
   isActive: 1

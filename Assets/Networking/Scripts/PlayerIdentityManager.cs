@@ -9,14 +9,28 @@ public class PlayerIdentityManager : NetworkBehaviour {
     [SyncVar]
     public bool playerAlive;
 
-	// Update is called once per frame
+    public GameObject visiblePlayer;
+
+	void Start ()
+    {
+        if(isLocalPlayer)
+        {
+            CmdSetPlayerAlive(false);
+        }
+        visiblePlayer.SetActive(playerAlive);
+    }
+
 	void Update () {
-	    if(isLocalPlayer)
+        if (isLocalPlayer)
         {
             CmdSetPlayerName(PreLoadInfo.playername);
             if (Input.GetKeyDown(KeyCode.K))
             {
                 CmdSetPlayerAlive(!playerAlive);
+            }
+            if (playerAlive)
+            {
+                transform.Translate(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
             }
         }
         gameObject.name = playerName;
@@ -32,5 +46,13 @@ public class PlayerIdentityManager : NetworkBehaviour {
     public void CmdSetPlayerAlive(bool state)
     {
         playerAlive = state;
+        visiblePlayer.SetActive(state);
+        RpcSetPlayerAlive(state);
+    }
+
+    [ClientRpc]
+    public void RpcSetPlayerAlive(bool state)
+    {
+        visiblePlayer.SetActive(state);
     }
 }
