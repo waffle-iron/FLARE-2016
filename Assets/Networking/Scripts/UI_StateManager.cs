@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UIStateManager : MonoBehaviour {
+public class UI_StateManager : MonoBehaviour {
     public GameObject[] uiParents;
 
 	void Update () {
