@@ -5,14 +5,9 @@ using UnityEngine.UI;
 public class UI_GameMenuManager : MonoBehaviour {
 
     GameObject playerObject;
-    [HideInInspector]
+    //[HideInInspector]
     public PLAYER_Identity player;
 
-    public GameObject teamMenu;
-    public GameObject teamCreateMenu;
-        public InputField teamDisplayName;
-        public Slider teamCapacity;
-        public Dropdown teamColor;
     public Text sliderText;
 
     public GameObject spawnMenu;
@@ -23,34 +18,20 @@ public class UI_GameMenuManager : MonoBehaviour {
 	void Update () {
         if(playerObject == null)
         {
-            teamMenu.SetActive(false);
             spawnMenu.SetActive(false);
             findPlayer();
         }else
         {
+            //If the player has a team show the spawn menu
             if(player.playerTeam >= 0)
             {
                 spawnMenu.SetActive(true);
-                teamMenu.SetActive(false);
             }else
             {
-                sliderText.text = "Team size: " + teamCapacity.value;
                 spawnMenu.SetActive(false);
-                teamMenu.SetActive(true);
             }
         }
 	}
-
-    public void joinTeam(int teamIndex)
-    {
-        player.setTeam(teamIndex);
-    }
-
-    public void leaveTeam()
-    {
-        player.suicide();
-        player.setTeam(-1);
-    }
 
     public void suicide()
     {
