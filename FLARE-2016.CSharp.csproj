@@ -64,7 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Networking\Scripts\FLARE_NetworkManager.cs" />
-    <Compile Include="Assets\Networking\Scripts\GAME_ClientInfo.cs" />
+    <Compile Include="Assets\Networking\Scripts\GAME_PreGameInfo.cs" />
+    <Compile Include="Assets\Networking\Scripts\GAME_TeamInfo.cs" />
     <Compile Include="Assets\Networking\Scripts\KeepOnLoad.cs" />
     <Compile Include="Assets\Networking\Scripts\PLAYER_Identity.cs" />
     <Compile Include="Assets\Networking\Scripts\UI_GameMenuManager.cs" />

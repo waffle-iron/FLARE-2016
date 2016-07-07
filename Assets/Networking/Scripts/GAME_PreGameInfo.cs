@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
-public class GAME_ClientInfo : MonoBehaviour {
+public class GAME_PreGameInfo: MonoBehaviour {
 
     public InputField nameEntryField;
     public static string playername;

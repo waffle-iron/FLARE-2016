@@ -38,8 +38,6 @@ public class UI_GameMenuManager : MonoBehaviour {
                 spawnMenu.SetActive(false);
                 teamMenu.SetActive(true);
             }
-
-            playerCount.text = player.gameCapacity.ToString();
         }
 	}
 
@@ -53,38 +51,6 @@ public class UI_GameMenuManager : MonoBehaviour {
         player.suicide();
         player.setTeam(-1);
     }
-
-    public void createTeamMenu()
-    {
-        teamCreateMenu.SetActive(!teamCreateMenu.active);
-    }
-
-    public void createAndJoinTeam()
-    {
-        Color tCol = Color.clear;
-
-        switch (teamColor.value.ToString())
-        {
-            case "RED":
-                tCol = Color.red;
-                break;
-            case "BLUE":
-                tCol = Color.blue;
-                break;
-            case "GREEN":
-                tCol = Color.green;
-                break;
-            case "YELLOW":
-                tCol = Color.yellow;
-                break;
-            case "PINK":
-                tCol = Color.magenta;
-                break;
-        }
-        player.createTeam(teamDisplayName.text, int.Parse(teamCapacity.value.ToString()), tCol);
-    }
-
-
 
     public void suicide()
     {
@@ -106,7 +72,7 @@ public class UI_GameMenuManager : MonoBehaviour {
     {
         foreach(GameObject g in playerList.players)
         {
-            if(g.name == GAME_ClientInfo.playername)
+            if(g.name == GAME_PreGameInfo.playername)
             {
                 playerObject = g;
                 player = g.GetComponent<PLAYER_Identity>();

@@ -3,7 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class UI_TeamList : MonoBehaviour {
-
+    
+    /*
+     
     public GameObject teamListObject;
     public UI_GameMenuManager menuManager;
     public float updateRate = 2;
@@ -34,4 +36,5 @@ public class UI_TeamList : MonoBehaviour {
             }
         }
     }
+    */
 }

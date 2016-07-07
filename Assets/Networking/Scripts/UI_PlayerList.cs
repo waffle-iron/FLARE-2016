@@ -38,7 +38,7 @@ public class UI_PlayerList : MonoBehaviour {
         }
         foreach (Transform t in listTransform)
         {
-            if(t.name == GAME_ClientInfo.playername){
+            if(t.name == GAME_PreGameInfo.playername){
                 t.SetAsFirstSibling();
             }
         }
