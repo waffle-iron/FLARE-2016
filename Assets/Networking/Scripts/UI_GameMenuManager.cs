@@ -25,10 +25,9 @@ public class UI_GameMenuManager : MonoBehaviour {
         InvokeRepeating("updateTeamList", 0.5f, 1.0f);
     }
 
-
     void Update () {
 
-        if (GPM == null)
+        if (GameObject.FindGameObjectWithTag("PlayerManager"))
         {
             GPM = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<GAME_PlayerManager>();
         }
@@ -48,6 +47,7 @@ public class UI_GameMenuManager : MonoBehaviour {
 
     void updateTeamList()
     {
+
         foreach(Transform t in playerList)
         {
             Destroy(t.gameObject);
@@ -69,7 +69,8 @@ public class UI_GameMenuManager : MonoBehaviour {
             GameObject newT = Instantiate(teamListObj);
             newT.transform.SetParent(teamList, false);
             newT.GetComponent<Text>().text = t.name + " " + t.memberCount.ToString() + "/" + t.capacity.ToString();
-            newT.GetComponentInChildren<Button>().onClick.AddListener(delegate { joinTeam(t.index); });
+            int teamIndex = t.index;
+            newT.GetComponentInChildren<Button>().onClick.AddListener(delegate { joinTeam(teamIndex); });
         }
 
     }
@@ -103,6 +104,7 @@ public class UI_GameMenuManager : MonoBehaviour {
     {
         if(playerObject != null)
         {
+            player.suicide();
             player.leaveTeam();
         }
     }

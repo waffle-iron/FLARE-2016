@@ -99,7 +99,7 @@ public class GAME_PlayerManager : NetworkBehaviour
 
         foreach (PlayerInfo player in playerList)
         {
-            if (player.team > 0) {
+            if (player.team != -1) {
                 TeamInfo team = teamList[player.team];
                 team.memberCount++;
 

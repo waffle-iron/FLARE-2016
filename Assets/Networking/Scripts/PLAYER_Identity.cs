@@ -33,9 +33,9 @@ public class PLAYER_Identity : NetworkBehaviour {
         }
     }
 
-    void Update() {  
+    void Update() {
 
-        if(GPM == null)
+        if (GameObject.FindGameObjectWithTag("PlayerManager"))
         {
             GPM = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<GAME_PlayerManager>();
         }
@@ -45,6 +45,10 @@ public class PLAYER_Identity : NetworkBehaviour {
             //If player alive
             if (playerAlive)
             {
+                if(playerTeam == -1)
+                {
+                    CmdSetPlayerAlive(false);
+                }
                 //Temporary input!
                 transform.Translate(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
             }
@@ -76,7 +80,7 @@ public class PLAYER_Identity : NetworkBehaviour {
 
     public void joinTeam(int teamIndex)
     {
-        if (isLocalPlayer && playerTeam < 0)
+        if (isLocalPlayer && playerTeam == -1)
         {
             CmdAttemptTeamAssign(teamIndex);
         }
@@ -84,7 +88,7 @@ public class PLAYER_Identity : NetworkBehaviour {
 
     public void leaveTeam()
     {
-        if(isLocalPlayer && playerTeam > 0)
+        if(isLocalPlayer && playerTeam != -1)
         {
             CmdAttemptTeamAssign(-1);
         }
@@ -96,6 +100,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         playerName = name;
         playerTeam = -1;
+        if(GPM != null) { GPM.UpdateLists(); }
     }
 
     //Sets player alive syncvar, unless there is no team assigned (then dead)
@@ -103,6 +108,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     public void CmdSetPlayerAlive(bool state)
     {
         playerAlive = state;
+        if (GPM != null) { GPM.UpdateLists(); }
     }
 
     [Command]
@@ -110,25 +116,27 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         kills += k;
         deaths += d;
+        if (GPM != null) { GPM.UpdateLists(); }
     }
 
     [Command]
     public void CmdAttemptTeamAssign(int teamIndex)
     {
-        if (teamIndex > 0)
+        if (teamIndex != -1)
         {
             if (!GPM.teamList[teamIndex].isFull)
             {
                 playerTeam = teamIndex;
-                GPM.UpdateLists();
-            }else
+                if (GPM != null) { GPM.UpdateLists(); }
+            }
+            else
             {
                 playerTeam = -1;
             }
         }else
         {
             playerTeam = -1;
-            GPM.UpdateLists();
+            if (GPM != null) { GPM.UpdateLists(); }
         }
     }
 }

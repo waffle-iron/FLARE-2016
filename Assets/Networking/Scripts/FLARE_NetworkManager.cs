@@ -9,6 +9,17 @@ public class FLARE_NetworkManager : NetworkManager {
 
     public GAME_PlayerManager playerManager;
 
+    void Update()
+    {
+        if (NetworkServer.active || NetworkClient.active)
+        {
+            if (GameObject.FindGameObjectWithTag("PlayerManager"))
+            {
+                playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<GAME_PlayerManager>();
+            }
+        }
+    }
+
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         GameObject namedPlayer = Instantiate(playerPrefab);
