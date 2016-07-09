@@ -8,7 +8,7 @@ public class GAME_PreGameInfo: MonoBehaviour {
 
     public InputField nameEntryField;
     public static string playername;
-    public static int amountOfTeams = 1;
+    public static int amountOfTeams = 2;
     public string mainMenuScene;
 
     public void setName () {
