@@ -38,9 +38,11 @@ public class GAME_PlayerManager : NetworkBehaviour
     }
     public class SyncListTeamInfo : SyncListStruct<TeamInfo> { }
 
-
+    //[SyncVar]
     public SyncListClientInfo clientList = new SyncListClientInfo();
+    //[SyncVar]
     public SyncListPlayerInfo playerList = new SyncListPlayerInfo();
+    //[SyncVar]
     public SyncListTeamInfo teamList = new SyncListTeamInfo();
 
     public string[] teamNames;

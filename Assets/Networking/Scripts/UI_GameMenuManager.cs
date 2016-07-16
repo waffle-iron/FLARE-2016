@@ -48,29 +48,33 @@ public class UI_GameMenuManager : MonoBehaviour {
     void updateTeamList()
     {
 
-        foreach(Transform t in playerList)
+        if (GPM != null)
         {
-            Destroy(t.gameObject);
-        }
-        foreach(Transform t2 in teamList)
-        {
-            Destroy(t2.gameObject);
-        }
 
-        foreach(GAME_PlayerManager.PlayerInfo p in GPM.playerList)
-        {
-            GameObject newP = Instantiate(playerListObj);
-            newP.transform.SetParent(playerList, false);
-            newP.GetComponent<Text>().text = p.name + " " + p.kills.ToString() + "/" + p.deaths.ToString() + " " + p.alive.ToString();
-        }
+            foreach (Transform t in playerList)
+            {
+                Destroy(t.gameObject);
+            }
+            foreach (Transform t2 in teamList)
+            {
+                Destroy(t2.gameObject);
+            }
 
-        foreach(GAME_PlayerManager.TeamInfo t in GPM.teamList)
-        {
-            GameObject newT = Instantiate(teamListObj);
-            newT.transform.SetParent(teamList, false);
-            newT.GetComponent<Text>().text = t.name + " " + t.memberCount.ToString() + "/" + t.capacity.ToString();
-            int teamIndex = t.index;
-            newT.GetComponentInChildren<Button>().onClick.AddListener(delegate { joinTeam(teamIndex); });
+            foreach (GAME_PlayerManager.PlayerInfo p in GPM.playerList)
+            {
+                GameObject newP = Instantiate(playerListObj);
+                newP.transform.SetParent(playerList, false);
+                newP.GetComponent<Text>().text = p.name + " " + p.kills.ToString() + "/" + p.deaths.ToString() + " " + p.alive.ToString();
+            }
+
+            foreach (GAME_PlayerManager.TeamInfo t in GPM.teamList)
+            {
+                GameObject newT = Instantiate(teamListObj);
+                newT.transform.SetParent(teamList, false);
+                newT.GetComponent<Text>().text = t.name + " " + t.memberCount.ToString() + "/" + t.capacity.ToString();
+                int teamIndex = t.index;
+                newT.GetComponentInChildren<Button>().onClick.AddListener(delegate { joinTeam(teamIndex); });
+            }
         }
 
     }
