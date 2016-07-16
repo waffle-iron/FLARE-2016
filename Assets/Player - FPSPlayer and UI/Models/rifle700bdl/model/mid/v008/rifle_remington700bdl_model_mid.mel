@@ -1,0 +1,10 @@
+
+python( "import sys" );
+python( "sys.path.append('C:/depot/Robotoki_Resources/HEO/code/LIVE/python/2.7/')" );
+python( "sys.path.append('C:/depot/Robotoki_Resources/HEO/code/LIVE/maya/2014/scripts/common/tools/')" );
+python( "sys.path.append('C:/depot/Robotoki_Resources/MASTER/code/LIVE/python/2.7/')" );
+python( "sys.path.append('C:/depot/Robotoki_Resources/MASTER/code/LIVE/maya/2014/scripts/common/tools/')" );
+python( "import publishTools" );
+python( "reload(publishTools)" );
+
+python( "publishTools.publish_modelAsset( 'HEO','','','','weapons','rifle/remington700bdl','model','mid','008','C:/depot/Robotoki_Resources/HEO/assets/LIVE/weapons/rifle/remington700bdl/model/mid/v008/rifle_remington700bdl_model_mid.mb.mark.dedecker',notes='''shaderchange ''',bypassedCheckList=[],addRecipients='' )" );
