@@ -91,6 +91,14 @@ public class PLAYER_Identity : NetworkBehaviour {
         }
     }
 
+    public void sendDamageToPlayer(string targetName, float dmg, string senderName)
+    {
+        if (isLocalPlayer && playerAlive)
+        {
+            CmdSendPlayerDamage(targetName, dmg,senderName);
+        }
+    }
+
     public void joinTeam(int teamIndex)
     {
         if (isLocalPlayer && playerTeam == -1)
@@ -121,7 +129,36 @@ public class PLAYER_Identity : NetworkBehaviour {
     public void CmdSetPlayerAlive(bool state)
     {
         playerAlive = state;
+        if(state)
+        {
+            playerHealth = 100.0f;
+        }else
+        {
+            deaths++;
+        }
         if (GPM != null) { GPM.UpdateLists(); }
+    }
+
+    [Command]
+    public void CmdSendPlayerDamage(string targetName, float damage, string senderName)
+    {
+        foreach(GameObject p in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if(p.name == targetName)
+            {
+                PLAYER_Identity PID = p.GetComponent<PLAYER_Identity>();
+                if (PID.playerHealth - damage > 0)
+                {
+                    PID.playerHealth -= damage;
+                }
+                else
+                {
+                    PID.playerHealth = 0;
+                    PID.CmdSetPlayerAlive(false);
+                    CmdAddKillDeath(1, 0);
+                }
+            }
+        }
     }
 
     [Command]

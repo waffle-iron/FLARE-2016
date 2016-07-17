@@ -30,6 +30,11 @@ public class UI_HitMarkerAnim : MonoBehaviour {
         _lerp = Mathf.Clamp01(_lerp);
 
         float scaler = 25 + (scaleAmount * (1 - _lerp));
-        _rect.sizeDelta = new Vector3(scaler, scaler, 1);       
+        _rect.sizeDelta = new Vector3(scaler, scaler, 1);   
+        
+        if(_lerp == 0)
+        {
+            Destroy(this.gameObject);
+        }    
 	}
 }

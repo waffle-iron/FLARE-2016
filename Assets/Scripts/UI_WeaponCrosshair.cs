@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public class UI_WeaponCrosshair : MonoBehaviour {
 
-    public  float spread = 0.0f;
+    [HideInInspector]
+    public float spread = 0.0f;
+    [HideInInspector]
     public bool force = false;
 
     [SerializeField]

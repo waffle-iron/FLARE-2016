@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class WeaponScript : MonoBehaviour
 {
 
+    public PLAYER_Identity PID;
 	public Player_WeaponADSAdjust ADS;
 	public UI_WeaponCrosshair CrosshairDisp;
 	public GameObject FPSCamera;
@@ -118,6 +119,11 @@ public class WeaponScript : MonoBehaviour
 	public Transform projectileSpawnPos;
 	private List<Vector3> projectileTrack = new List<Vector3> ();
 	public MeshRenderer dummyProjectile;
+
+    void Awake()
+    {
+        PID = transform.root.GetComponent<PLAYER_Identity>();
+    }
 
 	//END BULLET PHYSICS
 	void  Start ()
@@ -377,28 +383,54 @@ public class WeaponScript : MonoBehaviour
 	// Add bullet impact effects where the target was hit:
 	void  AddImpactEffects (Vector3 pos, Vector3 dir, Vector3 norm, GameObject baseTarget)
 	{
+        //Get the gameobject parent of the hit object
 		GameObject target = null;
+        GameObject playerTarget = null;
+        
+        Quaternion rotation = Quaternion.FromToRotation(Vector3.up, pos);
 
-		if (baseTarget.transform.parent != null) {
+        int teamIndexOfTarget = -1;
+        bool hitEnemy = false;
+
+        if (baseTarget.transform.parent != null) {
 		    target = baseTarget.transform.root.gameObject;
 	    } else {
 			target = baseTarget.transform.gameObject;
 		}
 
-		Quaternion rotation = Quaternion.FromToRotation (Vector3.up, pos);
-
-		GameObject impactFX = null;
-		damage = damageCurve.Evaluate (Vector3.Distance (target.transform.position, transform.position)) / pelletsPerShot;
-		distanceToTarget = Vector3.Distance (target.transform.position, transform.position);
-
-			if (impactParticles == true) {
-				if (target.tag == "Water") {
-					impactFX = waterHitFX;
-				} else {
-					impactFX = worldHitFX;
-					Instantiate (impactFX, pos, rotation);
-				}
+        //Check if we hit a player and get their team
+        if (target.GetComponent<PLAYER_Identity>())
+        {
+            playerTarget = target.GetComponent<PLAYER_Identity>().gameObject;
+            teamIndexOfTarget = target.GetComponent<PLAYER_Identity>().playerTeam;
+        }
+        //Check if on our team
+        if(playerTarget != null && teamIndexOfTarget != PID.playerTeam)
+        {
+            hitEnemy = true;
+        }
+		
+        
+        //Get the damage for the distance to the target
+        distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
+        damage = damageCurve.Evaluate(distanceToTarget) / pelletsPerShot;
+        //Apply the damage
+        if (hitEnemy)
+        {
+            PID.sendDamageToPlayer(playerTarget.name, damage, PID.playerName);
+            CrosshairDisp.hitMarker();
+        }
+        //No impactFX selected
+        GameObject impactFX = null;
+        //Evaluate the surface and set the impactFX
+        if (impactParticles == true) {
+			if (target.tag == "Water") {
+				impactFX = waterHitFX;
+			} else {
+				impactFX = worldHitFX;
+				Instantiate (impactFX, pos, rotation);
 			}
+		}
 		
 	}
 	
