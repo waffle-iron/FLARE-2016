@@ -71,14 +71,17 @@ public class GAME_PlayerManager : NetworkBehaviour
         //Populate the list
         foreach (ClientInfo c in clientList)
         {
-            PLAYER_Identity playerObj = ClientScene.FindLocalObject(c.netId).GetComponent<PLAYER_Identity>();
-            PlayerInfo player = new PlayerInfo();
-            player.alive = playerObj.playerAlive;
-            player.deaths = playerObj.deaths;
-            player.kills = playerObj.kills;
-            player.name = playerObj.playerName;
-            player.team = playerObj.playerTeam;
-            playerList.Add(player);
+            if (c.name != null)
+            {
+                PLAYER_Identity playerObj = ClientScene.FindLocalObject(c.netId).GetComponent<PLAYER_Identity>();
+                PlayerInfo player = new PlayerInfo();
+                player.alive = playerObj.playerAlive;
+                player.deaths = playerObj.deaths;
+                player.kills = playerObj.kills;
+                player.name = playerObj.playerName;
+                player.team = playerObj.playerTeam;
+                playerList.Add(player);
+            }
         }
 
         //Then populate the team list
@@ -127,14 +130,14 @@ public class GAME_PlayerManager : NetworkBehaviour
             return;
         }
 
-        var uv = player.GetComponent<NetworkIdentity>();
+        NetworkIdentity uv = player.GetComponent<NetworkIdentity>();
         if (uv == null)
         {
             Debug.LogError("AddPlayer no network identity");
             return;
         }
 
-        var b = new ClientInfo();
+        ClientInfo b = new ClientInfo();
         b.name = player.name;
         b.netId = uv.netId;
         b.added = Time.time;
