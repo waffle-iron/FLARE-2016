@@ -23,8 +23,6 @@ public class PLAYER_Identity : NetworkBehaviour {
     public GameObject clientcanvas;
     public MeshRenderer visiblePlayerObject;
 
-    public GAME_PlayerManager GPM;
-
     public override void OnStartLocalPlayer ()
     {
         //If local player, set name and death status.
@@ -39,10 +37,6 @@ public class PLAYER_Identity : NetworkBehaviour {
 
     void Update() {
 
-        if (GameObject.FindGameObjectWithTag("PlayerManager"))
-        {
-            GPM = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<GAME_PlayerManager>();
-        }
 
         if (isLocalPlayer)
         {
@@ -113,7 +107,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         playerName = name;
         playerTeam = -1;
-        if(GPM != null) { GPM.UpdateLists(); }
+        GAME_PlayerManager.UpdateLists();
     }
 
     //Sets player alive syncvar, unless there is no team assigned (then dead)
@@ -121,7 +115,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     public void CmdSetPlayerAlive(bool state)
     {
         playerAlive = state;
-        if (GPM != null) { GPM.UpdateLists(); }
+        GAME_PlayerManager.UpdateLists();
     }
 
     [Command]
@@ -129,7 +123,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         kills += k;
         deaths += d;
-        if (GPM != null) { GPM.UpdateLists(); }
+        GAME_PlayerManager.UpdateLists();
     }
 
     [Command]
@@ -137,10 +131,10 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         if (teamIndex != -1)
         {
-            if (!GPM.teamList[teamIndex].isFull)
+            if (!GAME_PlayerManager.teamList[teamIndex].isFull)
             {
                 playerTeam = teamIndex;
-                if (GPM != null) { GPM.UpdateLists(); }
+                GAME_PlayerManager.UpdateLists(); 
             }
             else
             {
@@ -149,7 +143,7 @@ public class PLAYER_Identity : NetworkBehaviour {
         }else
         {
             playerTeam = -1;
-            if (GPM != null) { GPM.UpdateLists(); }
+            GAME_PlayerManager.UpdateLists(); 
         }
     }
 }
