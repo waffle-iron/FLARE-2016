@@ -12,14 +12,11 @@ public class UI_WeaponCrosshair : MonoBehaviour {
     [SerializeField]
     private RectTransform spreadBox;
     [SerializeField]
-    private GameObject crosshair;
-    [SerializeField]
     private GameObject hitMarkerPrefab;
 
     void Update()
     {
-
-        crosshair.SetActive((!ADS.isADS || force));
+        spreadBox.gameObject.SetActive(!ADS.isADS || force);
 
         spreadBox.sizeDelta = new Vector3(spread, spread, 1.0f);
         if (Input.GetKeyDown(KeyCode.H))

@@ -38,16 +38,16 @@ public class GAME_PlayerManager : NetworkBehaviour
     }
     public class SyncListTeamInfo : SyncListStruct<TeamInfo> { }
 
-    [SyncVar]
-    public static SyncListClientInfo clientList = new SyncListClientInfo();
-    [SyncVar]
-    public static SyncListPlayerInfo playerList = new SyncListPlayerInfo();
-    [SyncVar]
-    public static SyncListTeamInfo teamList = new SyncListTeamInfo();
+    //[SyncVar]
+    public SyncListClientInfo clientList = new SyncListClientInfo();
+    //[SyncVar]
+    public SyncListPlayerInfo playerList = new SyncListPlayerInfo();
+    //[SyncVar]
+    public SyncListTeamInfo teamList = new SyncListTeamInfo();
 
-    public static string[] teamNames = { "RED", "BLUE", "GREEN", "YELLOW" };
+    public string[] teamNames;
 
-    void ClientChanged(SyncListStruct<ClientInfo>.Operation op, int itemIndex)
+    void ClientChanged(SyncList<ClientInfo>.Operation op, int itemIndex)
     {
         Debug.Log("Players changed:" + op);
         RefreshPlayerList();
@@ -59,12 +59,12 @@ public class GAME_PlayerManager : NetworkBehaviour
         RefreshPlayerList();
     }
 
-    public static void UpdateLists()
+    public void UpdateLists()
     {
         RefreshPlayerList();
     }
 
-    public static void RefreshPlayerList()
+    public void RefreshPlayerList()
     {
         playerList.Clear(); //Clear the list
 
@@ -88,7 +88,7 @@ public class GAME_PlayerManager : NetworkBehaviour
         RefreshTeamList();
     }
 
-    public static void RefreshTeamList()
+    public void RefreshTeamList()
     {
         teamList.Clear(); //Clear list
         
@@ -122,7 +122,7 @@ public class GAME_PlayerManager : NetworkBehaviour
     }
 
 
-    public static void AddPlayer(GameObject player)
+    public void AddPlayer(GameObject player)
     {
         if (player == null)
         {
@@ -145,7 +145,7 @@ public class GAME_PlayerManager : NetworkBehaviour
         clientList.Add(b);
     }
 
-    public static void RemovePlayer(GameObject player)
+    public void RemovePlayer(GameObject player)
     {
         if (player == null)
         {
@@ -171,7 +171,7 @@ public class GAME_PlayerManager : NetworkBehaviour
         }
     }
 
-    public static bool CheckPlayerExists(string nameToCheck)
+    public bool CheckPlayerExists(string nameToCheck)
     {
         foreach(ClientInfo p in clientList)
         {

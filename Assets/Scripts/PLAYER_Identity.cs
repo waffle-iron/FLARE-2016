@@ -23,6 +23,8 @@ public class PLAYER_Identity : NetworkBehaviour {
     public GameObject clientcanvas;
     public MeshRenderer visiblePlayerObject;
 
+    public GAME_PlayerManager GPM;
+
     public override void OnStartLocalPlayer ()
     {
         //If local player, set name and death status.
@@ -37,6 +39,10 @@ public class PLAYER_Identity : NetworkBehaviour {
 
     void Update() {
 
+        if (GameObject.FindGameObjectWithTag("PlayerManager"))
+        {
+            GPM = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<GAME_PlayerManager>();
+        }
 
         if (isLocalPlayer)
         {
@@ -107,7 +113,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         playerName = name;
         playerTeam = -1;
-        GAME_PlayerManager.UpdateLists();
+        if(GPM != null) { GPM.UpdateLists(); }
     }
 
     //Sets player alive syncvar, unless there is no team assigned (then dead)
@@ -115,7 +121,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     public void CmdSetPlayerAlive(bool state)
     {
         playerAlive = state;
-        GAME_PlayerManager.UpdateLists();
+        if (GPM != null) { GPM.UpdateLists(); }
     }
 
     [Command]
@@ -123,7 +129,7 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         kills += k;
         deaths += d;
-        GAME_PlayerManager.UpdateLists();
+        if (GPM != null) { GPM.UpdateLists(); }
     }
 
     [Command]
@@ -131,10 +137,10 @@ public class PLAYER_Identity : NetworkBehaviour {
     {
         if (teamIndex != -1)
         {
-            if (!GAME_PlayerManager.teamList[teamIndex].isFull)
+            if (!GPM.teamList[teamIndex].isFull)
             {
                 playerTeam = teamIndex;
-                GAME_PlayerManager.UpdateLists(); 
+                if (GPM != null) { GPM.UpdateLists(); }
             }
             else
             {
@@ -143,7 +149,7 @@ public class PLAYER_Identity : NetworkBehaviour {
         }else
         {
             playerTeam = -1;
-            GAME_PlayerManager.UpdateLists(); 
+            if (GPM != null) { GPM.UpdateLists(); }
         }
     }
 }
