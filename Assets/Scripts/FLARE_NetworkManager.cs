@@ -29,7 +29,24 @@ public class FLARE_NetworkManager : NetworkManager {
 
         var newPlayer = conn.playerControllers[0].gameObject;
 
-        playerManager.AddPlayer(newPlayer);
+        if (playerManager != null)
+        {
+            playerManager.AddPlayer(newPlayer);
+        }else
+        {
+            StartCoroutine("addPlayerDelayed", newPlayer);
+        }
+    }
+
+    IEnumerator addPlayerDelayed(GameObject p)
+    {
+        if (playerManager == null)
+        {
+            yield return null;
+        }
+
+        playerManager.AddPlayer(p);
+        
     }
 
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
