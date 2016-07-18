@@ -83,10 +83,10 @@
     <Compile Include="Assets\Scripts\UI_FollowWorldObject.cs" />
     <Compile Include="Assets\Scripts\UI_GameMenuManager.cs" />
     <Compile Include="Assets\Scripts\UI_HitMarkerAnim.cs" />
+    <Compile Include="Assets\Scripts\UI_RangeUtility.cs" />
     <Compile Include="Assets\Scripts\UI_StateManager.cs" />
     <Compile Include="Assets\Scripts\UI_WeaponCrosshair.cs" />
     <Compile Include="Assets\Scripts\WeaponScript.cs" />
-    <Compile Include="Assets\UI_RangeUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
